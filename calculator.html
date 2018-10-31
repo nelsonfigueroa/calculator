@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculator</title>
+    <script src="script.js" async></script>
+    <style>
+      /* Might need to change px to em ... just so it looks right on all devices */
+      /* Organize...IDs within classes should be nested. */
+      /* Bottom buttons should have border radius just like body */
+
+      #red-button {
+        background-color: #f96256;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin-left: 0.60em;
+        margin-top: 0.25em;
+        border-radius: 100%;
+      }
+
+      #yellow-button {
+        background-color: #fdbc3d;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin-left: 0.25em;
+        border-radius: 100%;
+      }
+
+      #green-button {
+        background-color: #33c948;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin-left: 0.25em;
+        border-radius: 100%;
+      }
+     
+      #calculator-screen {
+        width: 233px;
+        height: 80px; 
+        border-top-left-radius: 0.25em;
+        border-top-right-radius: 0.25em;
+        background-color: #414346;
+        position: relative; /* In order to be able to use position: absolute for input */
+      }
+
+      #calculator-input {
+        font-size: 3em;
+        color: white;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-right: 15px;
+        margin-bottom: 5px;
+      }
+
+      #calculator-body {
+        width: 233px;
+        height: 240px; 
+        border-bottom-left-radius: 0.25em;
+        border-bottom-right-radius: 0.25em;
+        background-color: #414346;
+      }
+
+      #other {
+        background-color: #525558;
+      }
+
+      #operator {
+        background-color: #FD9E2B;
+      }
+
+      #number {
+        background-color: #68686B;
+      }
+
+      #zero {
+        background-color: #68686B;
+        width: 115px;
+        margin-left: 1px;
+      }
+
+      .row {
+        /* Stolen from bootstrap, thanks! */
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+      }
+
+      .button {
+        width: 57px;
+        height: 47px;
+        /* border-radius: 100%; */
+        font-weight: bold;
+        margin-left: 1px;
+        margin-bottom: 1px;
+
+        /* CSS for text within buttons */
+        color: #E8E8E8;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 50px; 
+      }
+
+    </style>
+  </head>
+  <body>
+    <!-- Calculator screen -->
+    <div id="calculator-screen">
+      <span id="red-button"></span>
+      <span id="yellow-button"></span>
+      <span id="green-button"></span>
+      <br>
+      <span id="calculator-input">420.69</span>
+    </div>
+    <!-- Calculator body -->
+    <div id="calculator-body">
+      <!-- Button Rows -->
+      <div class="row">
+        <div class="button" id="other">AC</div>
+        <div class="button" id="other">+/-</div>
+        <div class="button" id="other">%</div>
+        <div class="button" id="operator">/</div>
+      </div>
+      <div class="row">
+        <div class="button" id="number">7</div>
+        <div class="button" id="number">8</div>
+        <div class="button" id="number">9</div>
+        <div class="button" id="operator">X</div>
+      </div>
+      <div class="row">
+        <div class="button" id="number">4</div>
+        <div class="button" id="number">5</div>
+        <div class="button" id="number">6</div>
+        <div class="button" id="operator">—</div>
+      </div>
+      <div class="row">
+        <div class="button" id="number">1</div>
+        <div class="button" id="number">2</div>
+        <div class="button" id="number">3</div>
+        <div class="button" id="operator">+</div>
+      </div>
+      <div class="row">
+        <div class="button" id="zero">0</div>
+        <div class="button" id="number">.</div>
+        <div class="button" id="operator">=</div>
+      </div>
+    </div>
+  </body>
+</html>
