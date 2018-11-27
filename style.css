@@ -31,7 +31,45 @@ html {
   line-height: 50px;
 }
 
+/* Theming for buttons */
+
+.button.other {
+  background-color: #525558;
+}
+
+.button.other:active {
+  background-color: #68686B;
+}
+
+.button.operator {
+  background-color: #FD9E2B;
+}
+
+.button.operator:active {
+  background-color: rgba(201, 125, 32);
+}
+
+.button.number {
+  background-color: #68686B;
+}
+
+.button.number:active {
+  background-color: rgba(168, 169, 170);
+}
+
+.button.zero {
+  background-color: #68686B;
+  width: 115px;
+  margin-left: 1px;
+}
+
+.button.zero:active {
+  background-color: rgba(168, 169, 170);
+  border-bottom-left-radius: 0.25em;
+}
+
 /* Control buttons */
+
 #red-button {
   background-color: #f96256;
   margin-left: 0.60em;
@@ -53,7 +91,7 @@ html {
 
 #calculator-screen {
   width: 233px;
-  height: 80px; 
+  height: 80px;
   border-top-left-radius: 0.25em;
   border-top-right-radius: 0.25em;
   background-color: #414346;
@@ -73,43 +111,8 @@ html {
 
 #calculator-body {
   width: 233px;
-  height: 240px; 
+  height: 240px;
   border-bottom-left-radius: 0.25em;
   border-bottom-right-radius: 0.25em;
   background-color: #414346;
-}
-
-/* Button backgrounds */
-#other {
-  background-color: #525558;
-}
-
-#other:active {
-  background-color: #68686B;
-}
-
-#operator {
-  background-color: #FD9E2B;
-}
-
-#operator:active {
-  background-color: rgba(201, 125, 32);
-}
-
-#number {
-  background-color: #68686B;
-}
-
-#number:active {
-  background-color: rgba(168, 169, 170);
-}
-
-#zero {
-  background-color: #68686B;
-  width: 115px;
-  margin-left: 1px;
-}
-
-#zero:active {
-  background-color: rgba(255, 255, 255, 0.81);
 }
