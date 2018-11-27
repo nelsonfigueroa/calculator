@@ -26,24 +26,94 @@ const button_decimal = document.querySelector("#decimal");
 // Calculator screen
 const calculator_input = document.querySelector("#calculator-input");
 
-
+// Function that allows for user input
 function input_number(num) {
-  // Testing
-  console.log("button clicked!");
-
-  // Limit length of numbers user can input
-  if (calculator_input.innerHTML.length < 7) {
-    calculator_input.innerHTML += num;
-    console.log(calculator_input.innerHTML.length);
+  // Limit length of numbers user can input, regex checks for only digits (excluding minus sign)
+  if (calculator_input.innerHTML.replace(/[^0-9]/g,"").length < 7) {
+    // If current number is 0, replace with what user types.
+    if (calculator_input.innerHTML == '0') {
+      calculator_input.innerHTML = num;
+    }
+    else {
+      calculator_input.innerHTML += num;
+    }
   }
 }
 
-function input_operator(operator) {
-  // Testing
-  console.log("operator clicked!");
+// Function to clear calculator screen
+function clear_screen() {
+  calculator_input.innerHTML = 0;
+}
+
+// Function to append or remove negative sign
+function plus_minus() {
+  // if minus already present, remove it.
+  if (calculator_input.innerHTML.charAt(0) == '-') {
+    calculator_input.innerHTML = calculator_input.innerHTML.slice(1);
+  }
+  // else if the only digit is 0, and length is 1, don't add minus
+  else if (calculator_input.innerHTML.charAt(0) == '0' && calculator_input.innerHTML.replace(/[^0-9]/g,"").length == 1) {
+    return
+  }
+  // else, input minus
+  else {
+    calculator_input.innerHTML = '-' + calculator_input.innerHTML;
+  }
+}
+
+// Function to generate percentages
+// Limitation: due to 7 digit limit, percentages will be inaccurate if used on really long numbers
+function percentage() {
+  // check for negative sign
+  if (calculator_input.innerHTML.charAt(0) == '-') {
+    num = calculator_input.innerHTML.slice(1);
+    num = num / 100;
+    num = '-' + num.toString();
+  }
+  else {
+    num = calculator_input.innerHTML;
+    num = num / 100;
+    num = num.toString();
+  }
+
+  // check for negative sign
+  if (calculator_input.innerHTML.charAt(0) == '-'){
+    // check for length
+    if (num.slice(1).replace(/[^0-9]/g,"").length < 7) {
+      console.log(num.slice(1).replace(/[^0-9]/g,"").length);
+      calculator_input.innerHTML = '-' + num.slice(1);
+    }
+    else {
+      num = parseFloat(num.slice(1));
+      calculator_input.innerHTML = '-' + num.toFixed(6).toString(); // up to 6 decimal places to take into account extra 0
+    }
+  }
+  else {
+    // check for length
+    if (num.replace(/[^0-9]/g,"").length < 7) {
+      console.log(num.replace(/[^0-9]/g,"").length)
+      calculator_input.innerHTML = num;
+    }
+    else {
+      num = parseFloat(num)
+      calculator_input.innerHTML = num.toFixed(6).toString(); // up to 6 decimal places to take into account extra 0
+    }
+  }
+}
+
+// Function to add a decimal
+function decimal() {
+  console.log("Decimal clicked!");
+  // If a decimal point is found anywhere in the string, don't add it.
+  // Else, append it.
+  // Take it into account when calculating stuff. If you add '5.' to '5' it equals 10. decimal ignored.
+  // Take it into account with percentages.
+  // shouldnt affect plus or minus sign
 }
 
 // Anonymous functions needed to pass in values using event listeners
+
+// Number buttons
 button_1.addEventListener("click", function() { input_number(button_1.innerHTML) }, false);
 button_2.addEventListener("click", function() { input_number(button_2.innerHTML) }, false);
 button_3.addEventListener("click", function() { input_number(button_3.innerHTML) }, false);
@@ -54,3 +124,15 @@ button_7.addEventListener("click", function() { input_number(button_7.innerHTML)
 button_8.addEventListener("click", function() { input_number(button_8.innerHTML) }, false);
 button_9.addEventListener("click", function() { input_number(button_9.innerHTML) }, false);
 button_0.addEventListener("click", function() { input_number(button_0.innerHTML) }, false);
+
+// Clear button
+button_clear.addEventListener("click", clear_screen, false);
+
+// Plus/Minus button
+button_plus_minus.addEventListener("click", plus_minus, false);
+
+// Percent button
+button_percent.addEventListener("click", percentage, false);
+
+// Decimal button
+button_decimal.addEventListener("click", decimal, false);
