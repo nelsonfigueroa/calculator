@@ -1,3 +1,11 @@
+/*
+
+  Need to take into account length of number when doing operations, goes out of screen
+  Need to take into account adding negative sign in the middle of operations
+
+*/
+
+
 // Numbers
 const button_1 = document.querySelector("#button_1");
 const button_2 = document.querySelector("#button_2");
@@ -26,6 +34,11 @@ const button_decimal = document.querySelector("#decimal");
 // Calculator screen
 const calculator_input = document.querySelector("#calculator-input");
 
+// Global variables to store numbers to be processed, including operator
+let num_1 = null;
+let num_2 = null;
+let operator = null;
+
 // Function that allows for user input
 function input_number(num) {
   // Limit length of numbers user can input, regex checks for only digits (excluding minus sign)
@@ -43,6 +56,10 @@ function input_number(num) {
 // Function to clear calculator screen
 function clear_screen() {
   calculator_input.innerHTML = 0;
+  // Clear global variables as well
+  num_1 = null;
+  num_2 = null;
+  operator = null;
 }
 
 // Function to append or remove negative sign
@@ -80,7 +97,6 @@ function percentage() {
   if (calculator_input.innerHTML.charAt(0) == '-'){
     // check for length
     if (num.slice(1).replace(/[^0-9]/g,"").length < 7) {
-      console.log(num.slice(1).replace(/[^0-9]/g,"").length);
       calculator_input.innerHTML = '-' + num.slice(1);
     }
     else {
@@ -91,7 +107,6 @@ function percentage() {
   else {
     // check for length
     if (num.replace(/[^0-9]/g,"").length < 7) {
-      console.log(num.replace(/[^0-9]/g,"").length)
       calculator_input.innerHTML = num;
     }
     else {
@@ -103,13 +118,111 @@ function percentage() {
 
 // Function to add a decimal
 function decimal() {
-  console.log("Decimal clicked!");
   // If a decimal point is found anywhere in the string, don't add it.
+  if (calculator_input.innerHTML.match(/\./)) {
+    return
+  }
   // Else, append it.
-  // Take it into account when calculating stuff. If you add '5.' to '5' it equals 10. decimal ignored.
-  // Take it into account with percentages.
-  // shouldnt affect plus or minus sign
+  else {
+    // Append
+    calculator_input.innerHTML += '.';
+  }
 }
+
+function equals() {
+  // Get current value and save it to second number global variable
+  if (num_2 == null) {
+    num_2 = calculator_input.innerHTML;
+  }
+
+  // If any variables are null, do nothing
+  if (num_1 == null || num_2 == null || operator == null ) {
+    return
+  }
+  else {
+    // Initialize result
+    let result = 0;
+
+    // Do the operation
+    switch(operator) {
+      case '/':
+          result = parseFloat(num_1) / parseFloat(num_2);
+          num_1 = result;
+          calculator_input.innerHTML = result.toString();
+          break;
+      case '*':
+          result = parseFloat(num_1) * parseFloat(num_2);
+          num_1 = result;
+          calculator_input.innerHTML = result.toString();
+          break;
+      case '-':
+          result = parseFloat(num_1) - parseFloat(num_2);
+          num_1 = result;
+          calculator_input.innerHTML = result.toString();
+          break;
+      case '+':
+          result = parseFloat(num_1) + parseFloat(num_2);
+          num_1 = result;
+          calculator_input.innerHTML = result.toString();
+          break;
+      default:
+          //code block
+    }
+  }
+}
+
+function divide() {
+  // Get current value and save it to global variable
+  if (num_1 == null) {
+    num_1 = calculator_input.innerHTML;
+  }
+  // Set operator to divide
+  operator = '/';
+  // Reset num_2
+  num_2 = null;
+  // Reset screen
+  calculator_input.innerHTML = '0';
+}
+
+function multiply() {
+  // Get current value and save it to global variable
+  if (num_1 == null) {
+    num_1 = calculator_input.innerHTML;
+  }
+  // Set operator to multiply
+  operator = '*';
+  // Reset num_2
+  num_2 = null;
+  // Reset screen
+  calculator_input.innerHTML = '0';
+}
+
+function subtract() {
+  // Get current value and save it to global variable
+  if (num_1 == null) {
+    num_1 = calculator_input.innerHTML;
+  }
+  // Set operator to subtract
+  operator = '-';
+  // Reset num_2
+  num_2 = null;
+  // Reset screen
+  calculator_input.innerHTML = '0';
+}
+
+function add() {
+  // Get current value and save it to global variable
+  if (num_1 == null) {
+    num_1 = calculator_input.innerHTML;
+  }
+  // Set operator to add
+  operator = '+';
+  // Reset num_2
+  num_2 = null;
+  // Reset screen
+  calculator_input.innerHTML = '0';
+}
+
 
 // Anonymous functions needed to pass in values using event listeners
 
@@ -136,3 +249,18 @@ button_percent.addEventListener("click", percentage, false);
 
 // Decimal button
 button_decimal.addEventListener("click", decimal, false);
+
+// Divide button
+button_divide.addEventListener("click", divide, false);
+
+// Multiply button
+button_multiply.addEventListener("click", multiply, false);
+
+// Subtract button
+button_subtract.addEventListener("click", subtract, false);
+
+// Add button
+button_add.addEventListener("click", add, false);
+
+// Equals button
+button_equals.addEventListener("click", equals, false);
