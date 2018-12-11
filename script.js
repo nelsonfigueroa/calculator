@@ -1,7 +1,9 @@
 /*
 
-  Need to take into account length of number when doing operations, goes out of screen
   When adding decimal in the middle of operation, doesn't keep it
+  When adding a negative in the middle of operation, it doesn't take it into account when pressing '=' again
+  Percentages in the middle of operations arent accounted for as well
+  Issues seem to occur when in the middle of operations
 
 */
 
@@ -66,7 +68,7 @@ function clear_screen() {
 function plus_minus() {
 
   // get current value, and multiply by -1
-  var current = calculator_input.innerHTML;
+  let current = calculator_input.innerHTML;
   current *= -1;
   calculator_input.innerHTML = current;
 }
@@ -74,38 +76,17 @@ function plus_minus() {
 // Function to generate percentages
 // Limitation: due to 7 digit limit, percentages will be inaccurate if used on really long numbers
 function percentage() {
-  // check for negative sign
-  if (calculator_input.innerHTML.charAt(0) == '-') {
-    num = calculator_input.innerHTML.slice(1);
-    num = num / 100;
-    num = '-' + num.toString();
-  }
-  else {
-    num = calculator_input.innerHTML;
-    num = num / 100;
-    num = num.toString();
-  }
+  num = parseFloat(calculator_input.innerHTML);
+  num = num / 100;
+  num = num.toString();
 
-  // check for negative sign
-  if (calculator_input.innerHTML.charAt(0) == '-'){
-    // check for length
-    if (num.slice(1).replace(/[^0-9]/g,"").length < 7) {
-      calculator_input.innerHTML = '-' + num.slice(1);
-    }
-    else {
-      num = parseFloat(num.slice(1));
-      calculator_input.innerHTML = '-' + num.toFixed(6).toString(); // up to 6 decimal places to take into account extra 0
-    }
+  // check for length
+  if (num.replace(/[^0-9]/g,"").length < 7) {
+    calculator_input.innerHTML = num;
   }
   else {
-    // check for length
-    if (num.replace(/[^0-9]/g,"").length < 7) {
-      calculator_input.innerHTML = num;
-    }
-    else {
-      num = parseFloat(num)
-      calculator_input.innerHTML = num.toFixed(6).toString(); // up to 6 decimal places to take into account extra 0
-    }
+    num = parseFloat(num)
+    calculator_input.innerHTML = num.toFixed(6).toString(); // up to 6 decimal places to take into account extra 0
   }
 }
 
@@ -146,8 +127,7 @@ function equals() {
       // Divide
       case '/':
           result = parseFloat(num_1) / parseFloat(num_2);
-          num_1 = result;
-          calculator_input.innerHTML = result.toString();
+          num_1 = result; // keep result in global variable incase user presses '=' again
           console.log("===== After Operation =====")
           console.log("num_1 = " + parseFloat(num_1));
           console.log("operator: " + operator);
@@ -156,8 +136,7 @@ function equals() {
       // Multiply
       case '*':
           result = parseFloat(num_1) * parseFloat(num_2);
-          num_1 = result;
-          calculator_input.innerHTML = result.toString();
+          num_1 = result; // keep result in global variable incase user presses '=' again
           console.log("===== After Operation =====")
           console.log("num_1 = " + parseFloat(num_1));
           console.log("operator: " + operator);
@@ -166,8 +145,7 @@ function equals() {
       // Subtract
       case '-':
           result = parseFloat(num_1) - parseFloat(num_2);
-          num_1 = result;
-          calculator_input.innerHTML = result.toString();
+          num_1 = result; // keep result in global variable incase user presses '=' again
           console.log("===== After Operation =====")
           console.log("num_1 = " + parseFloat(num_1));
           console.log("operator: " + operator);
@@ -176,8 +154,7 @@ function equals() {
       // Add
       case '+':
           result = parseFloat(num_1) + parseFloat(num_2);
-          num_1 = result;
-          calculator_input.innerHTML = result.toString();
+          num_1 = result; // keep result in global variable incase user presses '=' again
           console.log("===== After Operation =====")
           console.log("num_1 = " + parseFloat(num_1));
           console.log("operator: " + operator);
@@ -187,6 +164,16 @@ function equals() {
       default:
           return;
     }
+
+    result = result.toString(); 
+    if (result.replace(/[^0-9]/g,"").length < 8) {
+      // Output result to calculator screen
+      calculator_input.innerHTML = result;
+    }
+    else {
+      calculator_input.innerHTML = "(Too Long)";
+    }
+
   }
 }
 
@@ -241,7 +228,6 @@ function add() {
   // Reset screen
   calculator_input.innerHTML = '0';
 }
-
 
 // Anonymous functions needed to pass in values using event listeners
 
