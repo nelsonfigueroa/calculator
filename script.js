@@ -1,7 +1,7 @@
 /*
 
   Need to take into account length of number when doing operations, goes out of screen
-  Need to take into account adding negative sign in the middle of operations
+  When adding decimal in the middle of operation, doesn't keep it
 
 */
 
@@ -135,6 +135,11 @@ function equals() {
     num_2 = calculator_input.innerHTML;
   }
 
+  console.log("===== Before Operation =====")
+  console.log("num_1 = " + parseFloat(num_1));
+  console.log("operator: " + operator);
+  console.log("num_2 = " + parseFloat(num_2));
+
   // If any variables are null, do nothing
   if (num_1 == null || num_2 == null || operator == null ) {
     return
@@ -145,28 +150,49 @@ function equals() {
 
     // Do the operation
     switch(operator) {
+      // Divide
       case '/':
           result = parseFloat(num_1) / parseFloat(num_2);
           num_1 = result;
           calculator_input.innerHTML = result.toString();
+          console.log("===== After Operation =====")
+          console.log("num_1 = " + parseFloat(num_1));
+          console.log("operator: " + operator);
+          console.log("num_2 = " + parseFloat(num_2));
           break;
+      // Multiply
       case '*':
           result = parseFloat(num_1) * parseFloat(num_2);
           num_1 = result;
           calculator_input.innerHTML = result.toString();
+          console.log("===== After Operation =====")
+          console.log("num_1 = " + parseFloat(num_1));
+          console.log("operator: " + operator);
+          console.log("num_2 = " + parseFloat(num_2));
           break;
+      // Subtract
       case '-':
           result = parseFloat(num_1) - parseFloat(num_2);
           num_1 = result;
           calculator_input.innerHTML = result.toString();
+          console.log("===== After Operation =====")
+          console.log("num_1 = " + parseFloat(num_1));
+          console.log("operator: " + operator);
+          console.log("num_2 = " + parseFloat(num_2));
           break;
+      // Add
       case '+':
           result = parseFloat(num_1) + parseFloat(num_2);
           num_1 = result;
           calculator_input.innerHTML = result.toString();
+          console.log("===== After Operation =====")
+          console.log("num_1 = " + parseFloat(num_1));
+          console.log("operator: " + operator);
+          console.log("num_2 = " + parseFloat(num_2));
+          console.log("==========")
           break;
       default:
-          //code block
+          return;
     }
   }
 }
