@@ -64,18 +64,11 @@ function clear_screen() {
 
 // Function to append or remove negative sign
 function plus_minus() {
-  // if minus already present, remove it.
-  if (calculator_input.innerHTML.charAt(0) == '-') {
-    calculator_input.innerHTML = calculator_input.innerHTML.slice(1);
-  }
-  // else if the only digit is 0, and length is 1, don't add minus
-  else if (calculator_input.innerHTML.charAt(0) == '0' && calculator_input.innerHTML.replace(/[^0-9]/g,"").length == 1) {
-    return
-  }
-  // else, input minus
-  else {
-    calculator_input.innerHTML = '-' + calculator_input.innerHTML;
-  }
+
+  // get current value, and multiply by -1
+  var current = calculator_input.innerHTML;
+  current *= -1;
+  calculator_input.innerHTML = current;
 }
 
 // Function to generate percentages
